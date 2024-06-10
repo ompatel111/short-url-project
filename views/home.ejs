@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Page</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .container {
+      margin-top: 50px;
+    }
+    h1 {
+      margin-bottom: 30px;
+    }
+    .form-container {
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #fff;
+    }
+    .table-container {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center">URL SHORTENER provided by Om Patel</h1>
+    <% if (locals.id) { %>
+      <div class="alert alert-success" role="alert">
+        URL generated: <a href="http://localhost:8005/<%= id %>">http://localhost:8005/<%= id %></a>
+      </div>
+    <% } %>
+    
+    <div class="form-container">
+      <form method="post" action="/url">
+        <div class="form-group">
+          <label for="url">Enter Your Original Url</label>
+          <input type="text" class="form-control" id="url" name="url" placeholder="https://example.com" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Generate</button>
+      </form>
+    </div>
+    
+    <div class="table-container">
+      <% if (urls && urls.length) { %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>S. No</th>
+              <th>ShortID</th>
+              <th>Redirect</th>
+              <th>Clicks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% urls.forEach((url, index) => { %>
+              <tr>
+                <td><%= index + 1 %></td>
+                <td><%= url.shortId %></td>
+                <td><%= url.redirectURL %></td>
+                <td><%= url.visitHistory.length %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } %>
+    </div>
+  </div>
+</body>
+</html>
